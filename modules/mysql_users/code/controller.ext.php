@@ -59,7 +59,7 @@ class module_controller extends ctrl_module
                 $rowdb = $find->fetch();
 
                 if (!$rowdb) {
-                    
+
                 }
             }
             return true;
@@ -514,7 +514,7 @@ class module_controller extends ctrl_module
 
     static function IsValidUserName($username)
     {
-        if (!preg_match('/^[a-z\d][a-z\d-]{0,62}$/i', $username) || preg_match('/-$/', $username)) {
+        if (!preg_match('/^[a-z\d][a-z\d-\_]{0,62}$/i', $username) || preg_match('/-$/', $username)) {
             return false;
         } else {
             if (strlen($username) < 17) {
@@ -703,16 +703,7 @@ class module_controller extends ctrl_module
 
     static function getMysqlUsagepChart()
     {
-        global $controller;
-        $currentuser = ctrl_users::GetUserDetail();
-        $line = "";
-        $mysqlquota = $currentuser['mysqlquota'];
-        $mysql = ctrl_users::GetQuotaUsages('mysql', $currentuser['userid']);
-        $total = $mysqlquota;
-        $used = $mysql;
-        $free = $total - $used;
-        $line .= "<img src=\"etc/lib/pChart2/zpanel/z3DPie.php?score=" . $free . "::" . $used . "&labels=Free: " . $free . "::Used: " . $used . "&legendfont=verdana&legendfontsize=8&imagesize=240::190&chartsize=120::90&radius=100&legendsize=150::160\"/>";
-        return $line;
+        return '<img src="' . ui_tpl_assetfolderpath::Template() . 'images/unlimited.png" alt="' . ui_language::translate('Unlimited') . '"/>';
     }
 
     static function getResult()

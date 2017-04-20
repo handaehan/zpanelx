@@ -39,6 +39,15 @@ var zPanel = {
             container: 'body',
             trigger: 'hover'
         });
+        
+        // When Client Notice is Closed Hide Until it Changes
+        var Notice_Cookie = $('.notice-manager-alert').find('p').text().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-').substring(0, 64);
+        if($.cookie(Notice_Cookie) != 'closed') {
+            $('.notice-manager-alert').removeClass('hidden');
+        }
+        $('.notice-manager-alert > .close').click( function () {
+            $.cookie(Notice_Cookie, 'closed', {path: '/'});
+        });
 
 
         //zPanelDNS.utils.cache.dnsTitleId = $("#dnsTitle");
@@ -254,9 +263,9 @@ var zPanel = {
             zPanel.utils.deepExtend(this.options, options);
 
             // Check for Hidden Buttons
-            okButtonStyle  = this.options.okButton.show === false ? 'style="display: none;"'  :  
+            okButtonStyle = this.options.okButton.show === false ? 'style="display: none;"' : 
             '';
-            cancelButtonStyle  = this.options.cancelButton.show === false ? 'style="display: none;"'  :  
+            cancelButtonStyle = this.options.cancelButton.show === false ? 'style="display: none;"' : 
             '';
 
             // Create Dialog Div
